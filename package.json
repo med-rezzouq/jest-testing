@@ -6,9 +6,11 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test" : "jest --watch --detectOpenHandles"
   },
   "dependencies": {
+    "@chec/commerce.js": "^2.8.0",
     "next": "12.2.0",
     "react": "18.2.0",
     "react-dom": "18.2.0"
