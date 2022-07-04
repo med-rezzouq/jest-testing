@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test" : "jest --watch --detectOpenHandles"
+    "test": "jest --watch --detectOpenHandles"
   },
   "dependencies": {
     "@chec/commerce.js": "^2.8.0",
@@ -17,9 +17,10 @@
   },
   "devDependencies": {
     "@testing-library/jest-dom": "5.16.4",
-    "@testing-library/react": "13.2.0",
+    "@testing-library/react": "^13.2.0",
     "@testing-library/user-event": "14.2.0",
     "@types/react": "18.0.9",
+    "identity-obj-proxy": "^3.0.0",
     "jest": "28.1.0",
     "jest-environment-jsdom": "28.1.0",
     "typescript": "4.6.4"

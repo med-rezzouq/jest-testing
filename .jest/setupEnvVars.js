@@ -1,1 +1,2 @@
-process.env.NEXT_CHEC_PUBLIC_KEY = "foo";
+process.env.NEXT_PUBLIC_CHECK_PUBLIC_KEY =
+  "pk_44649ee1a4e75daf604c05d8ddd08235169a340878335";
