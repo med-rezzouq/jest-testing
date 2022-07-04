@@ -58,26 +58,26 @@ describe("home page", () => {
     //         expect(listitems.length).toBe(1);
     // });
 
-    it("show only search results when seach item is not empty",()=> {
+    it("show only search results when seach item is not empty",async  ()=> {
         render(<Home products={mockProducts} categories={mockCategories} />);
         const searchBox = screen.getByPlaceholderText(/Search products/);
 
-        userEvent.type(searchBox, 'mo');
-       
-
-    
+        await  userEvent.type(searchBox, 'mo');
 
         const searchResults = screen.getByRole("list",
-            { name: /search results/i });
+        { name: /search results/i });
         expect(searchResults).toBeVisible();
-    
+
         const { getAllByRole } = within(searchResults);
         const listitems = getAllByRole("listitem");
         expect(listitems.length).toBe(2);
-    
+
         const allproducts = screen.queryByRole("list",
             { name: /products/i });
         expect(allproducts).toBeNull();
+
+        // setTimeout(() => {}, 0);
+
     });
         
 });
