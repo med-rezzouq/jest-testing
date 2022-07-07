@@ -3,7 +3,7 @@ import Image from "next/image";
 import { useState } from "react";
 import commerce from "../lib/commerce";
 import styles from "../styles/Home.module.css";
-
+import Link from "next/link";
 export async function getStaticProps() {
   const { data: products } = await commerce.products.list();
   const { data: categories } = await commerce.categories.list();
@@ -17,7 +17,7 @@ export async function getStaticProps() {
 
 export default function Home({ products, categories, addToCart }) {
   const [searchTerm, setSearchTerm] = useState("");
-  console.log(products, categories);
+  // console.log(products, categories);
   return (
     <div className={styles.container}>
       <Head>
@@ -26,6 +26,9 @@ export default function Home({ products, categories, addToCart }) {
       </Head>
 
       <main className={styles.main}>
+        <Link href="/cart">
+          <a>cart</a>
+        </Link>
         <input
           role="searchbox"
           value={searchTerm}

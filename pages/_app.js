@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import "../styles/globals.css";
 
 function MyApp({ Component, pageProps }) {
-  const [cart, setCart] = useState();
+  const [cart, setCart] = useState(false);
 
   useEffect(() => {
     async () => {
