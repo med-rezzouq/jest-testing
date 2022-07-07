@@ -3,10 +3,13 @@ import Head from "next/head";
 import Link from "next/link";
 
 export default function CartDetail({ cart, updateQuantity, emptyCart }) {
+  console.log(cart);
+  // this loading state is for the increment and decrement when we click + we show loading
   const [loading, setLoading] = useState();
   const handleUpdateQuantity = async (quantity, productID) => {
     setLoading(productID);
     await updateQuantity(quantity, productID);
+    //ceci pour vider le state loading
     setLoading();
   };
 
