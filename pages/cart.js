@@ -44,7 +44,6 @@ export default function CartDetail({ cart, updateQuantity, emptyCart }) {
                       ) : (
                         <>
                           <button
-                            name="+"
                             onClick={() => {
                               handleUpdateQuantity(item.quantity + 1, item.id);
                             }}
@@ -53,7 +52,6 @@ export default function CartDetail({ cart, updateQuantity, emptyCart }) {
                           </button>
                           <span>{item.quantity}</span>
                           <button
-                            name="-"
                             onClick={() => {
                               handleUpdateQuantity(item.quantity - 1, item.id);
                             }}
