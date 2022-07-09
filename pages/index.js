@@ -4,6 +4,7 @@ import { useState } from "react";
 import commerce from "../lib/commerce";
 import styles from "../styles/Home.module.css";
 import Link from "next/link";
+import Product from "../components/Product/Product";
 export async function getStaticProps() {
   const { data: products } = await commerce.products.list();
   const { data: categories } = await commerce.categories.list();
@@ -26,9 +27,6 @@ export default function Home({ products, categories, addToCart }) {
       </Head>
 
       <main className={styles.main}>
-        <Link href="/cart">
-          <a>cart</a>
-        </Link>
         <input
           role="searchbox"
           value={searchTerm}
@@ -49,7 +47,17 @@ export default function Home({ products, categories, addToCart }) {
                   product.name.toLowerCase().includes(searchTerm.toLowerCase())
                 )
                 .map((product) => {
-                  return <li key={product.id}>{product.name}</li>;
+                  return (
+                    <li key={product.id}>
+                      {" "}
+                      <Product
+                        product={product}
+                        addToCart={() => {
+                          addToCart(product.id);
+                        }}
+                      />
+                    </li>
+                  );
                 })}
             </ul>
           </>
@@ -67,7 +75,17 @@ export default function Home({ products, categories, addToCart }) {
                         })
                         .slice(0, 1)
                         .map((product) => {
-                          return <li key={product.id}> {product.name}</li>;
+                          return (
+                            <li key={product.id}>
+                              {" "}
+                              <Product
+                                product={product}
+                                addToCart={() => {
+                                  addToCart(product.id);
+                                }}
+                              />
+                            </li>
+                          );
                         })}
                     </ul>
                   </li>
@@ -79,14 +97,13 @@ export default function Home({ products, categories, addToCart }) {
             <ul aria-labelledby="all-products-heading">
               {products.map((product) => {
                 return (
-                  <li
-                    onClick={() => {
-                      addToCart(product.id);
-                    }}
-                    key={product.id}
-                  >
-                    {" "}
-                    {product.name}
+                  <li key={product.id}>
+                    <Product
+                      product={product}
+                      addToCart={() => {
+                        addToCart(product.id);
+                      }}
+                    />
                   </li>
                 );
               })}
