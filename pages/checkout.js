@@ -10,18 +10,20 @@ export default function Checkout({ cart, refreshCart }) {
   const [shippingData, setShippingData] = useState();
 
   useEffect(() => {
-    async () => {
+    (async () => {
       if (cart) {
         try {
           const token = await commerce.checkout.generateToken(cart.id, {
             type: "cart",
           });
+          console.log("hello", token);
           setCheckoutToken(token);
         } catch (error) {
+          alert(error);
           console.log(error);
         }
       }
-    };
+    })();
   }, [cart]);
 
   const steps = [
