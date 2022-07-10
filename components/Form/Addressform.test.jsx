@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen, waitFor } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import  userEvent from "@testing-library/user-event";
 import AddressForm from "./AddressForm";
 import server from "../../__mocks__/server/server";
 import CountrySelect from "./CountrySelect";
@@ -60,7 +60,7 @@ describe("Addressform", () => {
     expect(countrySelect).toHaveValue("BD");
     expect(subdivisionSelect).toHaveValue("05");
     screen.getByText(/International/i);
-    userEvent.selectOptions(countrySelect, "IN");
+    await userEvent.selectOptions(countrySelect, "IN");
     subdivisionSelect = await screen.findByRole("combobox", {
       name: /subdivisions/i,
     });
@@ -94,22 +94,22 @@ describe("Addressform", () => {
     const zip = screen.getByRole("spinbutton", { name: /zip/i });
     const country = await screen.findByRole("combobox", { name: /country/i });
 
-    userEvent.type(firstname, "John");
-    userEvent.type(lastname, "Doe");
-    userEvent.type(city, "Delhi");
-    userEvent.type(email, "abc@gmail.com");
-    userEvent.type(address, "123 Dream street, New Delhi");
-    userEvent.type(zip, "12345");
-    userEvent.selectOptions(country, "IN");
+    await userEvent.type(firstname, "John");
+    await userEvent.type(lastname, "Doe");
+    await userEvent.type(city, "Delhi");
+    await userEvent.type(email, "abc@gmail.com");
+    await userEvent.type(address, "123 Dream street, New Delhi");
+    await userEvent.type(zip, "12345");
+    await userEvent.selectOptions(country, "IN");
 
     const subdivisions = await screen.findByRole("combobox", {
       name: /subdivisions/i,
     });
-    userEvent.selectOptions(subdivisions, "AN");
+    await userEvent.selectOptions(subdivisions, "AN");
 
     await screen.findByRole("combobox", { name: /shipping-options/i });
 
-    userEvent.click(screen.getByRole("button", { name: /Next/i }));
+    await userEvent.click(screen.getByRole("button", { name: /Next/i }));
     await waitFor(() => {
       expect(shippingData).toBeCalled();
       expect(shippingData).toBeCalledWith({

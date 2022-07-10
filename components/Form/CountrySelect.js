@@ -22,66 +22,73 @@ export default function CountrySelect({
   const [shippingOptions, setShippingOptions] = useState([]);
   const [selectedShippingOption, setSelectedShippingOption] = useState();
 
-  useEffect(async () => {
-    if (checkoutToken) {
-      await commerce.services
-        .localeListShippingCountries(checkoutToken.id)
-        .then((res) => {
-          let countriesArray = Object.keys(res.countries).map((key) => {
-            return { code: key, name: res.countries[key] };
-          });
-          setCountries(countriesArray);
-          setSelectedCountry(countriesArray[0].code);
-          setValue("country", countriesArray[0].code);
-        })
-        .catch((err) => console.error(err));
-    }
+  useEffect(() => {
+    (async () => {
+      if (checkoutToken) {
+        await commerce.services
+          .localeListShippingCountries(checkoutToken.id)
+          .then((res) => {
+            let countriesArray = Object.keys(res.countries).map((key) => {
+              return { code: key, name: res.countries[key] };
+            });
+            setCountries(countriesArray);
+            console.log("countries", countriesArray);
+            setSelectedCountry(countriesArray[0].code);
+            setValue("country", countriesArray[0].code);
+          })
+          .catch((err) => console.error(err));
+      }
+    })();
   }, []);
 
-  useEffect(async () => {
-    setDisabled(true);
-    setLoading("subdivisions");
-    if (selectedCountry) {
-      await commerce.services
-        .localeListShippingSubdivisions(checkoutToken.id, selectedCountry)
-        .then((res) => {
-          let subdivisionsArray = Object.keys(res.subdivisions).map((key) => {
-            return { code: key, name: res.subdivisions[key] };
-          });
-          setSubdivisions(subdivisionsArray);
-          setSelectedSubdivision(subdivisionsArray[0].code);
-          setValue("subdivisions", subdivisionsArray[0].code);
-        })
-        .catch((err) => console.error(err));
-    }
+  useEffect(() => {
+    (async () => {
+      setDisabled(true);
+      setLoading("subdivisions");
+      if (selectedCountry) {
+        await commerce.services
+          .localeListShippingSubdivisions(checkoutToken.id, selectedCountry)
+          .then((res) => {
+            let subdivisionsArray = Object.keys(res.subdivisions).map((key) => {
+              return { code: key, name: res.subdivisions[key] };
+            });
+            setSubdivisions(subdivisionsArray);
+            setSelectedSubdivision(subdivisionsArray[0].code);
+            setValue("subdivisions", subdivisionsArray[0].code);
+          })
+          .catch((err) => console.error(err));
+      }
+    })();
   }, [selectedCountry]);
 
-  useEffect(async () => {
-    setDisabled(true);
-    setLoading("true");
-    if (selectedSubdivision) {
-      await commerce.checkout
-        .getShippingOptions(checkoutToken.id, {
-          country: selectedCountry,
-          region: selectedSubdivision,
-        })
-        .then((res) => {
-          let shippingOptionsArray = res.map((elem) => {
-            return {
-              code: elem.id,
-              name: `${elem.description}-${elem.price.formatted_with_symbol}`,
-            };
-          });
-          setShippingOptions(shippingOptionsArray);
-          setSelectedShippingOption(shippingOptionsArray[0].code);
-          setValue("shipping-options", shippingOptionsArray[0].code);
-        })
-        .catch((err) => console.error(err));
+  useEffect(() => {
+    (async () => {
+      setDisabled(true);
+      setLoading("true");
+      if (selectedSubdivision) {
+        await commerce.checkout
+          .getShippingOptions(checkoutToken.id, {
+            country: selectedCountry,
+            region: selectedSubdivision,
+          })
+          .then((res) => {
+            let shippingOptionsArray = res.map((elem) => {
+              return {
+                code: elem.id,
+                name: `${elem.description}-${elem.price.formatted_with_symbol}`,
+              };
+            });
+            setShippingOptions(shippingOptionsArray);
+            setSelectedShippingOption(shippingOptionsArray[0].code);
+            setValue("shipping-options", shippingOptionsArray[0].code);
+          })
+          .catch((err) => console.error(err));
 
-      setInitialLoading(false);
-      setLoading("");
-      setDisabled(false);
-    }
+        setInitialLoading(false);
+        setLoading("");
+        setDisabled(false);
+      }
+    })();
   }, [selectedSubdivision]);
 
   if (initialLoading)
